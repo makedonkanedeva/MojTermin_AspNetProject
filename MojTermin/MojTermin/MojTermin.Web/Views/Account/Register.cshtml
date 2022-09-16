@@ -1,0 +1,69 @@
+﻿@model MojTermin.Domain.DTO.UserRegistrationDto
+@using MojTermin.Domain.DomainModels;
+@{
+    ViewData["Title"] = "Register";
+}
+@{
+    var data = ViewBag.Message;
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4>Create a new account.</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role"></label>
+                <select name="Role" id="Role" class="form-control">
+                    <option value="0">Select</option>
+                    @foreach (Role role in (List<Role>)ViewBag.Message)
+                    {
+                        <option value="@role.Id"> @role.Name</option>
+                    }
+                </select><br />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="text-danger">
+                @Html.ValidationMessage("message")
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        }
+    </div>
+        
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,57 @@
+﻿@model MojTermin.Domain.DomainModels.Visit
+@using MojTermin.Domain.DomainModels;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Visit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Create", "Visits", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Term" class="control-label"></label>
+                <input asp-for="Term" class="form-control" />
+                <span asp-validation-for="Term" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Doctor" class="control-label"></label>
+                <select name="Doctor" id="Doctor" class="form-control">
+                    <option value="0">Select</option>
+                    @foreach (Doctor doctor in (List<Doctor>)ViewBag.Doctors)
+                    {
+                        <option value="@doctor.Id"> @doctor.Name @doctor.Surname</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Patient" class="control-label"></label>
+                <select name="Patient" id="Patient" class="form-control">
+                    <option value="0">Select</option>
+                    @foreach (Patient patient in (List<Patient>)ViewBag.Patients)
+                    {
+                        <option value="@patient.Id"> @patient.Name @patient.Surname</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        }
+        </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

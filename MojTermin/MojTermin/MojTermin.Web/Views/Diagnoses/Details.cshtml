@@ -1,0 +1,47 @@
+﻿@using MojTermin.Domain.DomainModels;
+@model MojTermin.Domain.DomainModels.Diagnosis
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Diagnosis</h4>
+    <hr />
+    @*<dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>*@
+
+    <dl class="row">
+        <dt class = "col-sm-2">Name</dt>
+        <dd class = "col-sm-10">@Model.Name</dd>
+        <dt class = "col-sm-2">Description</dt>
+        <dd class = "col-sm-10">@Model.Description</dd>
+        <dt class = "col-sm-2">Term</dt>
+        @foreach (Visit visit in (List<Visit>)ViewBag.Message)
+        {
+                if (Model.Visits.Any(item => item.DiagnosisId == Model.Id && item.VisitId == visit.Id))
+                {
+                    <dd class = "col-sm-10">@visit.Term.ToString()</dd>
+                }
+        }
+    </dl>
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

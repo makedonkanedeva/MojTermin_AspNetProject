@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MojTermin.Domain.DomainModels.Specialty>
+@using MojTermin.Domain.DomainModels;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    var doctors = (List<Doctor>)ViewBag.Message;
+}
+
+<h1>Specialties</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialty in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => specialty.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@specialty.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@specialty.Id">Details</a> |
+
+                    @if (!doctors.Any(doc => doc.Specialty.Id == specialty.Id))
+                    {
+                        <a asp-action="Delete" asp-route-id="@specialty.Id">Delete</a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

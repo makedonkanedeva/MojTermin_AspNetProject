@@ -1,0 +1,39 @@
+﻿@model List<MojTerminAdminApp.Models.Referral>
+
+<div class="container">
+    <div class="row m-5">
+
+        <div class="row">
+            <a class="btn btn-outline-success" asp-controller="Referral" asp-action="ExportAllReferrals">Export All Referrals</a>
+        </div>
+
+        <table class="table mt-5">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Patient details</th>
+                    <th scope="col">Current Doctor</th>
+                    <th scope="col">Doctor Forwarded To</th>
+                    <th scope="col">Term</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@item.Patient.PrintFullName()</td>
+                        <td>@item.Patient.Doctor.PrintFullName()</td>
+                        <td>@item.ForwardTo.PrintFullName()</td>
+                        <td>@item.Term</td>
+                        <td><a asp-route-referralId="@item.Id" asp-action="Details" class="btn btn-info">View Referral</a></td>
+                        <td><a asp-route-referralId="@item.Id" asp-action="PrintReferral" class="btn btn-info">Print Referral</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

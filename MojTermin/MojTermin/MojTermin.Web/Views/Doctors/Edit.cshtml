@@ -1,0 +1,66 @@
+﻿@model MojTermin.Domain.DomainModels.Doctor
+@using MojTermin.Domain.DomainModels;
+@{
+    ViewData["Title"] = "Edit";
+}
+@{
+    var data = ViewBag.Message;
+}
+<h1>Edit</h1>
+
+<h4>Doctor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Edit", "Doctors", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ssn" class="control-label"></label>
+                <input asp-for="Ssn" class="form-control" />
+                <span asp-validation-for="Ssn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicenceNumber" class="control-label"></label>
+                <input asp-for="LicenceNumber" class="form-control" />
+                <span asp-validation-for="LicenceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialty" class="control-label"></label>
+                <select name="Specialty" id="Specialty" class="form-control">
+                    <option selected value="@Model.Specialty.Id"> @Model.Specialty.Name</option>
+                    @foreach (Specialty specialty in (List<Specialty>)ViewBag.Message)
+                    {
+                        if (specialty.Id != Model.Specialty.Id)
+                        {
+                            <option value="@specialty.Id"> @specialty.Name</option>
+                        }
+
+                    }
+                 </select>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

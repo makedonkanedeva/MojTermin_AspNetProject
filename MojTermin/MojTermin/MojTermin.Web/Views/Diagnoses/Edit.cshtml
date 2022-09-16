@@ -1,0 +1,61 @@
+﻿@model MojTermin.Domain.DomainModels.Diagnosis
+@using MojTermin.Domain.DomainModels
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Diagnosis</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Edit", "Diagnoses", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Visits" class="control-label"></label>
+                <select name="Visits" id="Visits" class="form-control">
+                    @foreach (Visit visit in (List<Visit>)ViewBag.Message)
+                    {
+                        if (Model.Visits.Count() != 0)
+                        {
+                            if (Model.Visits.Any(item => item.DiagnosisId == Model.Id && item.VisitId == visit.Id))
+                            {
+                                <option selected value="@visit.Id">@visit.Term.ToString()</option>
+                            }
+                            else
+                            {
+                                <option value="@visit.Id">@visit.Term.ToString()</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        }
+        </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

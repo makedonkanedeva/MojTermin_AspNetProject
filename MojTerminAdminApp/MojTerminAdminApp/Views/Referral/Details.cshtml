@@ -1,0 +1,51 @@
+﻿@model MojTerminAdminApp.Models.Referral
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Term)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Term)
+        </dd>
+
+
+        <dt class="col-sm-2">
+            Patient Details
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var patientName = Model.Patient.Name + " " + Model.Patient.Surname;
+                @Html.DisplayFor(model => patientName)
+            }
+        </dd>
+
+
+        <dt class="col-sm-2">
+            Current Doctor
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var currentDoctorName = Model.Patient.Doctor.Name + " " + Model.Patient.Doctor.Surname;
+                @Html.DisplayFor(model => currentDoctorName)
+            }
+        </dd>
+
+
+        <dt class="col-sm-2">
+            Doctor Forwarded To
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var doctorName = Model.ForwardTo.Name + " " + Model.ForwardTo.Surname;
+                @Html.DisplayFor(model => doctorName)
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

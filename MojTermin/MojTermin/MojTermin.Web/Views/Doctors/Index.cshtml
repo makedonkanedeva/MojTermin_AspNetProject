@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MojTermin.Domain.DomainModels.Doctor>
+@using MojTermin.Domain.DomainModels;
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    var patients = (List<Patient>)ViewBag.Patients;
+    var visits = (List<Visit>)ViewBag.Visits;
+    var referrals = (List<Referral>)ViewBag.Referrals;
+}
+<h1>Doctors</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ssn</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>LicenceNumber</th>
+            <th>Specialty</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model)
+        {
+            <tr>
+                <td>@doctor.Ssn</td>
+                <td>@doctor.Name</td>
+                <td>@doctor.Surname</td>
+                <td>@doctor.LicenceNumber</td>
+                <td>@doctor.Specialty.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@doctor.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@doctor.Id">Details</a> |
+                    @if (!patients.Any(patient => patient.Doctor.Id == doctor.Id)
+                        && !visits.Any(visit => visit.Doctor.Id == doctor.Id) && 
+                        !referrals.Any(referral => referral.ForwardTo.Id == doctor.Id))
+                    {
+                        <a asp-action="Delete" asp-route-id="@doctor.Id">Delete</a>
+                    }
+                        
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

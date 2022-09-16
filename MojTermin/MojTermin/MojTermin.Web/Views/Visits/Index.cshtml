@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MojTermin.Domain.DomainModels.Visit>
+@using MojTermin.Domain.DomainModels;
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    var patients = (List<Patient>)ViewBag.Patients;
+    var doctors = (List<Doctor>)ViewBag.Doctors;
+    var diagnoses = (List<Diagnosis>)ViewBag.Diagnoses;
+}
+
+<h1>Visits</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Term</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Diagnosis d in diagnoses)
+        {
+            @foreach (var visit in Model)
+            {
+                <tr>
+                    <td>@visit.Term</td>
+                    @{
+                        var patientName = visit.Patient.Name + " " + visit.Patient.Surname;
+                        <td>@patientName</td>
+                    }
+                    @{
+                        var doctorName = visit.Doctor.Name + " " + visit.Doctor.Surname;
+                        <td>@doctorName</td>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@visit.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@visit.Id">Details</a> |
+
+                        @if(!d.Visits.Any(v => v.VisitId == visit.Id))
+                        {
+                            <a asp-action="Delete" asp-route-id="@visit.Id">Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

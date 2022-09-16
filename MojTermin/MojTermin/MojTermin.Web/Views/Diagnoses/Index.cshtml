@@ -1,0 +1,49 @@
+﻿@using MojTermin.Domain.DomainModels;
+@model IEnumerable<MojTermin.Domain.DomainModels.Diagnosis>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Diagnoses</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Visit</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var diagnosis in Model)
+        {
+            <tr>
+                <td>@diagnosis.Name</td>
+                <td>@diagnosis.Description</td>
+
+                @foreach (Visit visit in (List<Visit>)ViewBag.Message)
+                {
+                    if (diagnosis.Visits.Count() != 0)
+                    {
+                        if (diagnosis.Visits.Any(item => item.DiagnosisId == diagnosis.Id && item.VisitId == visit.Id))
+                        {
+                                <td>@visit.Term.ToString()</td>
+                        }
+                    }
+                }
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@diagnosis.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@diagnosis.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@diagnosis.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
